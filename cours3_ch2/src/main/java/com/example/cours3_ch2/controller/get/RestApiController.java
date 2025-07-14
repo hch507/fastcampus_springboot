@@ -1,6 +1,7 @@
 package com.example.cours3_ch2.controller.get;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,5 +18,13 @@ public class RestApiController {
     public String hello(){
         var html = "<html> <body> <h1> Hello Spring boot <h1> <body> <html>";
         return html;
+    }
+
+    @GetMapping(path = "/echo/{message}")
+    public String echo(
+            @PathVariable String message
+    ){
+        System.out.println("echo message : "+ message);
+        return message;
     }
 }
