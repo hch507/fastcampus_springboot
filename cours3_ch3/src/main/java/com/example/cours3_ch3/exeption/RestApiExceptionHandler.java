@@ -4,6 +4,7 @@ import com.example.cours3_ch3.controller.RestApiBController;
 import com.example.cours3_ch3.controller.RestApiController;
 import com.example.cours3_ch3.model.Api;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,19 +15,9 @@ import java.util.NoSuchElementException;
 //global exception
 @Slf4j
 //@RestControllerAdvice(basePackages = "com.example.coure3_ch3.controller")
+@Order(1)
 @RestControllerAdvice(basePackageClasses = {RestApiController.class, RestApiBController.class})
 public class RestApiExceptionHandler {
-
-    // 전체 exception handler
-    @ExceptionHandler(value = {Exception.class})
-    public ResponseEntity exception(
-            Exception e
-    ) {
-        log.error("", e);
-        return ResponseEntity
-                .status(200)
-                .build();
-    }
 
     @ExceptionHandler(value = {IndexOutOfBoundsException.class})
     public ResponseEntity outOfBound(
