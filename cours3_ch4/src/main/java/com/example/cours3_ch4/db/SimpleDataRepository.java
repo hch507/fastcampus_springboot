@@ -29,7 +29,7 @@ abstract public class SimpleDataRepository<T extends Entity, ID extends Long> im
                 .findFirst();
 
         if (preData.isPresent()) { // 기존 데이터가 있는 경우
-            dataList.remove(preData);
+            dataList.remove(preData.get());
             dataList.add(data);
         } else {// 새로운 데이터 저장
             index++;
