@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,5 +19,13 @@ public class UserService {// android 클린아키텍츠의 usecase 인듯
 
     public List<UserEntity> findAll(){
         return userRepository.findAll();
+    }
+
+    public void delete(Long id){
+        userRepository.delete(id);
+    }
+
+    public Optional<UserEntity> findById(Long id){
+        return userRepository.findById(id);
     }
 }
