@@ -4,8 +4,10 @@ import com.example.simple_board.post.db.PostEntity;
 import com.example.simple_board.post.db.PostRepository;
 import com.example.simple_board.post.model.PostRequest;
 import com.example.simple_board.post.model.PostViewRequest;
+import com.example.simple_board.reply.service.ReplyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -13,9 +15,11 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PostService {
 
     private final PostRepository postRepository;
+    private final ReplyService replyService;
 
     public PostEntity create(
             PostRequest postRequest
@@ -34,12 +38,15 @@ public class PostService {
     }
 
     public PostEntity view(PostViewRequest postViewRequest) {
-        PostEntity post = postRepository.findFirstByIdAndStatusOrderByIdDesc(postViewRequest.getPostId(),postViewRequest.getPassword())
+        PostEntity post = postRepository.findFirstByIdAndStatusOrderByIdDesc(postViewRequest.getPostId(),"REGISTERED")
                 .orElseThrow(() -> new RuntimeException("해당 게시글이 존재하지 않습니다."));
 
         if (!post.getPassword().equals(postViewRequest.getPassword())) {
             throw new RuntimeException("패스워드 에러");
         }
+
+        var replyList= replyService.findAllByPostId(post.getId());
+        post.setReplyList(replyList);
 
         return post;
     }
