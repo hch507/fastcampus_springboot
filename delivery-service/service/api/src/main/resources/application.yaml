@@ -1,6 +1,4 @@
 spring:
-  application:
-    name: simple-board
   jpa:
     show-sql: true
     properties:
