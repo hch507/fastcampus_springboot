@@ -25,6 +25,6 @@ public class AccountApiController {
                 .email("123@naver.com")
                 .registeredAt(LocalDateTime.now())
                 .build();
-       return Api.ok(response);
+       return Api.OK(response);
     }
 }
